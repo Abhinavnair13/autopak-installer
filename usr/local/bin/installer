@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # autopak.sh: A script to manage software installations
-
+source ./config.sh
 # Define the directory for the installers
 INSTALLER_DIR="/tmp/autopak-installers"
 
 # Check if the script is run with sudo
-if [[ "$EUID" -ne 0 ]]; then
+if [[ "$EUID" -ne 0 ]]; then #If you're root (superuser), EUID will be 0 ; Is the current user not root?
   echo "Please run this script with sudo."
   exit 1
 fi
@@ -14,7 +14,7 @@ fi
 # Clone the repository to fetch the latest installers
 if [ ! -d "$INSTALLER_DIR" ]; then
   echo "Cloning the autopak-installers repository..."
-  git clone https://github.com/Abhinavnair13/AutoPak.git "$INSTALLER_DIR"
+  git clone "$INSTALLER_REPO_URL" "$INSTALLER_DIR"
 else
   echo "Updating the autopak-installers repository..."
   git -C "$INSTALLER_DIR" pull
